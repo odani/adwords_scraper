@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{run AdwordsScraper.start and pass a keyword string.}
   gem.homepage      = ""
 
-  gem.add_development_dependency = "mechanize"
+  gem.add_development_dependency "mechanize"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
