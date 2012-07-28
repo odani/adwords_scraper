@@ -1,5 +1,4 @@
 require "adwords_scraper/version"
-require "mechanize"
 
 module AdwordsScraper
   def self.test
