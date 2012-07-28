@@ -1,6 +1,9 @@
 # AdwordsScraper
 
-TODO: Write a gem description
+This gem scrapes the Adwords ads from a Google search engine results page, maps
+it by position and then parses the title, description, display url, redirect,
+sitelinks (if any), boxed warning (for pharma ads and if applicable) as well as
+reviews text (if any).
 
 ## Installation
 
@@ -18,7 +21,10 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Once installed, simply run the following (replace "green ipod" with your own
+keyword text:
+
+    AdwordsScraper.start("green ipod")
 
 ## Contributing
 
