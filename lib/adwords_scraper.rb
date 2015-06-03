@@ -1,19 +1,18 @@
 require "adwords_scraper/version"
 require "mechanize"
-
 module AdwordsScraper
   def self.test
     "inside test"
   end
 
-  def self.start(keyword)
-    doc = fetch_serp(keyword)
-    scrape_serp(doc)
-
+  def self.start(keyword, top_ads='#tads', right_ads='#mbEnd li', bottom_ads='#tadsb li', domain = "www.google.com")
+    doc = fetch_serp(keyword, domain)
+    scrape_serp(doc, Hash['top', top_ads, 'right', right_ads, 'bottom', bottom_ads])
   end
 
-  def self.fetch_serp(keyword)
-    url = query_url(keyword)
+  
+  def self.fetch_serp(keyword, ldomain)
+    url = query_url(keyword, ldomain)
 
     agent = Mechanize.new
 
@@ -23,17 +22,13 @@ module AdwordsScraper
     agent.get url
   end
 
-  def self.query_url(keyword)
-    'http://www.google.com/search?gcx=w&sourceid=chrome&ie=UTF-8&q='+ keyword.gsub(" ", "+")
+  def self.query_url(keyword, ldom)
+    'http://'+ ldom + '/search?gcx=w&sourceid=chrome&ie=UTF-8&q='+ keyword.gsub(" ", "+")
   end
 
-  def self.scrape_serp(doc)
+  def self.scrape_serp(doc, selectors)
     container = {}	
-    selectors = {}
-    selectors['top'] = "#tads .vsta"
-    selectors['right'] = "#mbEnd li" # .vsra (old)
-    selectors['bottom'] = "#tadsb li"
-
+    
     selectors.each do |location, selector|
       candidate = doc.search(selector) 
       if !candidate.search('h3').empty? && candidate.size < 10 # two validations
@@ -61,7 +56,7 @@ module AdwordsScraper
     container = {}
 
     desc = ''
-    d = doc.search('.ac').first.children
+    d = doc.search('.ads-creative').first.children rescue []
     d.each do |i|
       if i.name == 'br'
         desc = desc + ' '

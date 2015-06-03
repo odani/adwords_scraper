@@ -25,6 +25,15 @@ Once installed, simply run the following (replace "green ipod" with your own
 keyword text:
 
     AdwordsScraper.start("green ipod")
+    
+Alternatively, you can specify CSS selectors for top, right and bottom ads
+in case Google eventually change them
+
+    AdwordsScraper.start("green ipod", "#tads", "#mbEnd li", "#tadsb li")
+
+And specify a localized Google domain
+
+    AdwordsScraper.start("green ipod", "#tads", "#mbEnd li", "#tadsb li", "www.google.com.co")
 
 ## Contributing
 
